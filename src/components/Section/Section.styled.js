@@ -5,6 +5,7 @@ export const StyledSection = styled.section`
 `;
 
 export const StyledTitle = styled.h1`
+  margin-bottom: 10px;
   color: ${p => p.theme.colors.primaryText};
   /* background-color: ${p => p.theme.colors.white}; */
   text-shadow: 0 1px #808d93, -1px 0 #cdd2d5, -1px 2px #808d93, -2px 1px #cdd2d5,

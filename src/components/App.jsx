@@ -17,6 +17,22 @@ class App extends Component {
     filter: '',
   };
 
+  componentDidMount() {
+    if (localStorage.getItem('contacts')) {
+      this.setState(() => {
+        return {
+          contacts: [...JSON.parse(localStorage.getItem('contacts'))],
+        };
+      });
+    }
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (prevState.contact !== this.state.contacts) {
+      localStorage.setItem('contacts', JSON.stringify(this.state.contacts));
+    }
+  }
+
   onSubmit = (subName, subNumber) => {
     if (this.state.contacts.find(contact => contact.name === subName)) {
       return alert(`${subName} is already in contacts.`);
@@ -55,15 +71,17 @@ class App extends Component {
 
     return (
       <Box>
-        <Section title="PhoneBook"></Section>
-        <ContactForm onSubmit={this.onSubmit} />
+        <Section title="PhoneBook">
+          <ContactForm onSubmit={this.onSubmit} />
+        </Section>
         <div>
-          <Section title="Contacts"></Section>
-          <Filter filter={filter} onChange={this.handleFilterChange} />
-          <ContactList
-            onRemove={this.handleRemoveContact}
-            contacts={visibleContacts}
-          />
+          <Section title="Contacts">
+            <Filter filter={filter} onChange={this.handleFilterChange} />
+            <ContactList
+              onRemove={this.handleRemoveContact}
+              contacts={visibleContacts}
+            />
+          </Section>
         </div>
       </Box>
     );
